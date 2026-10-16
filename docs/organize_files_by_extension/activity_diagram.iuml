@@ -1,0 +1,31 @@
+@startuml
+
+start
+
+: Receive the path to the folder to be organized;
+if (Is the path valid?) then (yes)
+    : Iterate through each file in the folder;
+    : Get the file extension for each file;
+
+    if (Does this file have an extension?) then (yes)
+        : Create a subfolder with the name of the extension if it doesn't exist;  
+
+    else (no)
+        : Create a subfolder named "no_extension" if it doesn't exist;
+
+    endif 
+
+    if (Is there another file with the same name inside the folder?) then (yes)
+        : Rename the file by appending a number to its name;
+    else (no)
+    endif
+
+        : Move the file to the corresponding subfolder;
+
+else (no)
+    : Stop the process;
+
+endif
+
+
+@enduml

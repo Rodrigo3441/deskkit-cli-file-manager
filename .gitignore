@@ -1,2 +1,11 @@
+# PyInstaller build artifacts
+build/
+dist/
+
+# Python cache
 *.pytest_cache
-*__pycache__
+*__pycache__/
+
+#Virtual environments
+.venv/
+venv/

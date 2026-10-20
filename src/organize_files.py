@@ -14,6 +14,9 @@ def organize_files_by_extension(verified_path: pathlib.Path) -> None:
     if verified_path is None:
         return
 
+    total_moved_files = 0
+    total_failed_files = 0
+
     for file in verified_path.iterdir():
         if file.is_file():
             extension = file.suffix[1:]  # Get the extension without the dot
@@ -50,8 +53,28 @@ def organize_files_by_extension(verified_path: pathlib.Path) -> None:
                     new_file_path = new_folder / file.name
                     file.rename(new_file_path)
                     print(f'moved \'{file.name}\' into \'{new_folder}\'')
+
+                total_moved_files += 1
                 
 
             # Skip the file if there's an error, such as permission issues or if the file is in use
             except OSError as e:
-                continue 
+                total_failed_files += 1
+                print(f'failed to move the file \'{file.name}\': {e.strerror}')
+
+    print()
+
+    if total_moved_files == 0 and total_failed_files == 0:
+        print('No files have been moved: the folder has no files to organize.')
+
+    elif total_moved_files > 0 and total_failed_files == 0:
+        print('All the files have been moved successfully.')
+
+    elif total_moved_files == 0 and total_failed_files > 0:
+        print('No files have been moved.')
+
+    else:
+        print('Some files failed to move during the process')
+
+    print(f'Total moved files: {total_moved_files} | Total failed files: {total_failed_files}')
+        

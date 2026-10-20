@@ -1,4 +1,5 @@
 import pathlib
+from datetime import datetime
 
 def verify_path(folder_path: str) -> None | pathlib.Path:
     if not folder_path:
@@ -29,7 +30,8 @@ def list_everything_in_folder(verified_path: pathlib.Path) -> None | list:
         if file.is_file():
             files.append(
                 {
-                    'modified_time': file.stat().st_mtime,
+                    'modified_date': file.stat().st_mtime,
+                    'type': '<FILE>',
                     'size': file.stat().st_size,
                     'name': file.name
                 }
@@ -38,7 +40,8 @@ def list_everything_in_folder(verified_path: pathlib.Path) -> None | list:
         elif file.is_dir():
             folders.append(
                 {
-                    'modified_time': file.stat().st_mtime,
+                    'modified_date': file.stat().st_mtime,
+                    'type': '<DIR>',
                     'size': '',
                     'name': file.name
                 }
